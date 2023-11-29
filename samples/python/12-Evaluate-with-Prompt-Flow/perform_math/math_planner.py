@@ -49,17 +49,17 @@ def my_python_tool(
     # Import the native functions
     math_plugin = kernel.import_skill(Math(), "MathPlugin")
 
-    ask = "Use the available math functions to solve this word problem: " + input
+    ask = f"Use the available math functions to solve this word problem: {input}"
 
     plan = asyncio.run(planner.create_plan_async(ask))
 
     # Execute the plan
     result = asyncio.run(kernel.run_async(plan)).result
 
-    for index, step in enumerate(plan._steps):
-        print("Function: " + step.skill_name + "." + step._function.name)
-        print("Input vars: " + str(step.parameters.variables))
-        print("Output vars: " + str(step._outputs))
-    print("Result: " + str(result))
+    for step in plan._steps:
+        print(f"Function: {step.skill_name}.{step._function.name}")
+        print(f"Input vars: {str(step.parameters.variables)}")
+        print(f"Output vars: {str(step._outputs)}")
+    print(f"Result: {str(result)}")
 
     return str(result)
